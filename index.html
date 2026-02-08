@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart AIOps Assistant</title>
+    <style>
+        :root {
+            --primary-color: #BB86FC; /* Modern purple */
+            --secondary-color: #03DAC6; /* Teal accent */
+            --accent-color: #CF6679; /* Soft pink */
+            --dark-color: #121212; /* Dark background */
+            --light-color: #1E1E1E; /* Slightly lighter dark */
+            --text-color: #FFFFFF; /* White text */
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: linear-gradient(135deg, var(--dark-color) 0%, #1A1A2E 100%);
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #3700B3 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+            opacity: 0.1;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, #018786 100%);
+            color: var(--dark-color);
+            padding: 12px 24px;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            margin-top: 20px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        section {
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1, h2, h3 {
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            text-align: center;
+            font-size: 2rem;
+        }
+
+        h3 {
+            color: var(--text-color);
+        }
+
+        .features, .how-it-works {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 20px;
+        }
+
+        .feature, .step {
+            width: calc(33.333% - 20px);
+            margin: 10px 0;
+            text-align: center;
+            background: var(--light-color);
+            padding: 30px 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .feature:hover, .step:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+        }
+
+        .feature h3, .step h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .demo {
+            background: var(--light-color);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        textarea {
+            width: 100%;
+            height: 150px;
+            margin-bottom: 15px;
+            padding: 15px;
+            border: 1px solid #333;
+            border-radius: var(--border-radius);
+            font-family: inherit;
+            font-size: 16px;
+            resize: vertical;
+            transition: var(--transition);
+            background: var(--dark-color);
+            color: var(--text-color);
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(187, 134, 252, 0.2);
+        }
+
+        .chat {
+            background: var(--light-color);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            max-height: 300px;
+            overflow-y: auto;
+            box-shadow: var(--shadow);
+            border: 1px solid #333;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            padding: 10px 15px;
+            border-radius: 20px;
+            max-width: 70%;
+            word-wrap: break-word;
+        }
+
+        .user {
+            text-align: right;
+            margin-left: auto;
+            background: var(--primary-color);
+            color: var(--dark-color);
+        }
+
+        .bot {
+            text-align: left;
+            background: var(--dark-color);
+            color: var(--text-color);
+            border: 1px solid #333;
+        }
+
+        #userInput {
+            width: calc(80% - 10px);
+            padding: 12px 15px;
+            border: 1px solid #333;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            margin-right: 10px;
+            transition: var(--transition);
+            background: var(--dark-color);
+            color: var(--text-color);
+        }
+
+        #userInput:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(187, 134, 252, 0.2);
+        }
+
+        footer {
+            background: var(--dark-color);
+            color: var(--text-color);
+            text-align: center;
+            padding: 30px 20px;
+            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .features, .how-it-works {
+                flex-direction: column;
+            }
+            .feature, .step {
+                width: 100%;
+            }
+            header h1 {
+                font-size: 2rem;
+            }
+            .cta-button {
+                width: 100%;
+                max-width: 300px;
+            }
+            #userInput {
+                width: calc(100% - 10px);
+                margin-bottom: 10px;
+            }
+            .cta-button:last-of-type {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header id="hero">
+        <h1>AI‑Powered AIOps Assistant for Smarter System Monitoring</h1>
+        <p>Upload logs, detect issues, understand root causes, and get instant recommendations — all in one intelligent platform.</p>
+        <button class="cta-button" onclick="scrollToSection('demo')">Analyze Logs</button>
+    </header>
+
+    <section id="about">
+        <h2>About Smart AIOps Assistant</h2>
+        <p>Smart AIOps Assistant helps IT and DevOps teams manage complex systems by automating log analysis. Instead of manually scanning thousands of log lines, users can rely on AI‑driven insights to identify failures, understand why they occurred, and take corrective action faster.</p>
+    </section>
+
+    <section id="features">
+        <h2>Features</h2>
+        <div class="features">
+            <div class="feature">
+                <h3>Upload and analyze system log files</h3>
+                <p>Easily upload or paste logs for instant analysis.</p>
+            </div>
+            <div class="feature">
+                <h3>Automatic detection of errors and anomalies</h3>
+                <p>AI identifies patterns and flags issues automatically.</p>
+            </div>
+            <div class="feature">
+                <h3>AI‑based root cause explanation</h3>
+                <p>Get simple explanations of why issues occurred.</p>
+            </div>
+            <div class="feature">
+                <h3>Actionable recommendations to fix issues</h3>
+                <p>Receive step-by-step solutions to resolve problems.</p>
+            </div>
+            <div class="feature">
+                <h3>Interactive assistant for system insights</h3>
+                <p>Ask questions and get AI-powered responses.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="how-it-works">
+        <h2>How It Works</h2>
+        <div class="how-it-works">
+            <div class="step">
+                <h3>1. Upload or paste system logs</h3>
+                <p>Provide your log data to the assistant.</p>
+            </div>
+            <div class="step">
+                <h3>2. The assistant analyzes logs for abnormal patterns</h3>
+                <p>AI scans for errors and anomalies.</p>
+            </div>
+            <div class="step">
+                <h3>3. Detected issues are classified and summarized</h3>
+                <p>Issues are categorized for clarity.</p>
+            </div>
+            <div class="step">
+                <h3>4. Root causes are explained in simple terms</h3>
+                <p>Understand the 'why' behind the issues.</p>
+            </div>
+            <div class="step">
+                <h3>5. Recommendations are provided to resolve the issue</h3>
+                <p>Get actionable advice to fix problems.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="demo">
+        <h2>Log Analysis Demo</h2>
+        <div class="demo">
+            <h3>Sample Log Input</h3>
+            <textarea id="logInput" placeholder="Paste your logs here...">INFO Server started
+WARNING Memory usage high
+ERROR Database connection failed
+ERROR Database connection failed</textarea>
+            <button class="cta-button" onclick="analyzeLogs()">Analyze Logs</button>
+            <div id="analysisOutput" style="margin-top: 20px;"></div>
+        </div>
+    </section>
+
+    <section id="ai-assistant">
+        <h2>AI Assistant</h2>
+        <p>The AI assistant allows users to interact with the system by asking questions such as:</p>
+        <ul>
+            <li>Why did the system fail?</li>
+            <li>What should be fixed first?</li>
+            <li>Is the system stable now?</li>
+        </ul>
+        <div class="chat" id="chatBox">
+            <!-- Chat messages will appear here -->
+        </div>
+        <input type="text" id="userInput" placeholder="Ask a question..." style="width: 80%; padding: 10px;">
+        <button class="cta-button" onclick="sendMessage()">Send</button>
+    </section>
+
+    <section id="tech-stack">
+        <h2>Tech Stack</h2>
+        <p>This project is built using Python‑based log analysis, rule‑based intelligence, and AI‑driven explanations to simulate real‑world AIOps systems in a lightweight prototype.</p>
+    </section>
+
+    <section id="future-scope">
+        <h2>Future Scope</h2>
+        <ul>
+            <li>Real‑time log monitoring</li>
+            <li>Predictive anomaly detection</li>
+            <li>Automated remediation actions</li>
+            <li>Integration with cloud and DevOps platforms</li>
+        </ul>
+    </section>
+
+    <footer>
+        <p>Simplifying IT operations with AI‑powered insights.</p>
+    </footer>
+
+    <script>
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function analyzeLogs() {
+            const logInput = document.getElementById('logInput').value;
+            const output = document.getElementById('analysisOutput');
+            // Simple simulation of log analysis
+            if (logInput.includes('ERROR Database connection failed')) {
+                output.innerHTML = `
+                    <h3>Analysis Output</h3>
+                    <p><strong>Issue Detected:</strong> Repeated database connection failures</p>
+                    <p><strong>Root Cause:</strong> Database service instability or overload</p>
+                    <p><strong>Recommendation:</strong> Restart the database service and monitor system resources</p>
+                `;
+            } else {
+                output.innerHTML = '<p>No issues detected in the provided logs.</p>';
+            }
+        }
+
+        function sendMessage() {
+            const userInput = document.getElementById('userInput').value;
+            const chatBox = document.getElementById('chatBox');
+            if (userInput.trim() === '') return;
+
+            // Add user message
+            const userMessage = document.createElement('div');
+            userMessage.className = 'message user';
+            userMessage.textContent = 'You: ' + userInput;
+            chatBox.appendChild(userMessage);
+
+            // Simulate bot response
+            const botMessage = document.createElement('div');
+            botMessage.className = 'message bot';
+            if (userInput.toLowerCase().includes('why did the system fail')) {
+                botMessage.textContent = 'Bot: Based on the logs, the system failed due to repeated database connection failures, likely caused by service instability.';
+            } else if (userInput.toLowerCase().includes('what should be fixed first')) {
+                botMessage.textContent = 'Bot: Restart the database service and monitor resources.';
+            } else if (userInput.toLowerCase().includes('is the system stable now')) {
+                botMessage.textContent = 'Bot: After analysis, the system appears stable if the recommendations were followed.';
+            } else {
+                botMessage.textContent = 'Bot: I\'m sorry, I didn\'t understand that. Try asking about system failures or recommendations.';
+            }
+            chatBox.appendChild(botMessage);
+
+            // Clear input
+            document.getElementById('userInput').value = '';
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+    </script>
+</body>
+</html>
